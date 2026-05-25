@@ -1,0 +1,27 @@
+ai_env/
+venv/
+.venv/
+__pycache__/
+*.pyc
+.pytest_cache/
+.mypy_cache/
+
+.git/
+.gitignore
+.idea/
+.vscode/
+*.swp
+.DS_Store
+
+.gradio/
+data/users.json
+data/orders.json
+data/carts/
+data/thumbs/
+data/clip_index/
+data/products.csv.bak
+temp_upload.jpg
+
+# 文档之外的 Markdown 也保留，方便容器内 INTERVIEW.md 可用
+*.log
+node_modules/

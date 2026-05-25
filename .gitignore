@@ -1,0 +1,49 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# 虚拟环境
+ai_env/
+venv/
+env/
+.venv/
+
+# 环境变量与密钥（不要提交！）
+.env
+.env.local
+start.ps1.local
+
+# 数据：运行时生成 / 含个人信息，不提交
+# （保留 data/products.csv 和 data/images/ —— HF Spaces 部署需要）
+data/users.json
+data/orders.json
+data/carts/
+data/thumbs/
+data/clip_index/
+data/cache/
+data/products.csv.bak
+data/*.png
+.gradio/
+
+# 上传 / 临时
+temp_upload.jpg
+*.tmp
+
+# 爬虫 / 调试临时图片（仅商城商品图 data/images/ 保留）
+scripts/**/*.jpg
+scripts/**/*.png
+
+# IDE
+.vscode/
+.idea/
+*.swp
+.DS_Store
+Thumbs.db
+
+# 日志
+*.log
+logs/

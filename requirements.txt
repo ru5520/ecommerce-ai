@@ -1,0 +1,24 @@
+# 本地与 Hugging Face Spaces 共用的依赖清单
+# Gradio 在 HF Spaces 上由 sdk_version (README frontmatter) 控制版本，本地按下方版本安装。
+gradio==6.14.0
+fastapi==0.136.1
+uvicorn==0.47.0
+pydantic>=2.0,<3.0
+
+# 数据 / 检索
+pandas>=2.0,<3.0
+numpy>=1.26,<2.0
+Pillow>=10.0
+faiss-cpu>=1.7
+
+# AI 模型（CPU 版即可；HF Spaces 自动选择匹配 Linux 的 wheel）
+torch>=2.1
+transformers>=4.40
+
+# LLM / API
+openai>=1.40
+python-dotenv>=1.0
+requests>=2.31
+
+# 测试（本地开发用，HF Spaces 也会装但不影响）
+pytest>=8.0
