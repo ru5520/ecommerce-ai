@@ -6,6 +6,7 @@ colorTo: purple
 sdk: gradio
 sdk_version: 6.14.0
 app_file: app.py
+python_version: "3.10"
 pinned: false
 license: mit
 short_description: CLIP 多模态检索 + DeepSeek 导购 + 完整电商订单闭环

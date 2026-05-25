@@ -171,17 +171,37 @@ def _ensure_model() -> None:
     print("CLIP loaded.")
 
 
+def _to_tensor(out):
+    """兼容不同 transformers 版本的返回类型（Tensor / ModelOutput / dict）。"""
+    import torch
+
+    if isinstance(out, torch.Tensor):
+        return out
+    # ModelOutput / dict-like
+    for attr in ("image_embeds", "text_embeds", "last_hidden_state", "pooler_output"):
+        v = getattr(out, attr, None)
+        if isinstance(v, torch.Tensor):
+            return v
+    if isinstance(out, dict):
+        for v in out.values():
+            if isinstance(v, torch.Tensor):
+                return v
+    if isinstance(out, (list, tuple)) and out and isinstance(out[0], torch.Tensor):
+        return out[0]
+    raise TypeError(f"Unsupported model output type: {type(out)}")
+
+
 def _encode_images(images: list) -> np.ndarray:
     import torch
 
     vectors = []
     for i in range(0, len(images), ENCODE_BATCH):
         batch = images[i : i + ENCODE_BATCH]
-        inputs = processor(images=batch, return_tensors="pt", padding=True)
+        inputs = processor(images=batch, return_tensors="pt")
         with torch.inference_mode():
-            features = model.get_image_features(**inputs)
+            features = _to_tensor(model.get_image_features(**inputs))
         for row in features:
-            emb = row.cpu().numpy()
+            emb = row.detach().cpu().numpy()
             emb = emb / np.linalg.norm(emb)
             vectors.append(emb)
     return np.array(vectors).astype("float32")
@@ -261,8 +281,8 @@ def search_by_image(image, top_k: int = 5) -> list[dict]:
     image.thumbnail((224, 224), PILImage.Resampling.LANCZOS)
     inputs = processor(images=image, return_tensors="pt")
     with torch.inference_mode():
-        features = model.get_image_features(**inputs)
-    return search_by_embedding(features[0].cpu().numpy(), top_k)
+        features = _to_tensor(model.get_image_features(**inputs))
+    return search_by_embedding(features[0].detach().cpu().numpy(), top_k)
 
 
 def search_by_text(text: str, top_k: int = 5) -> list[dict]:
@@ -271,5 +291,5 @@ def search_by_text(text: str, top_k: int = 5) -> list[dict]:
 
     inputs = processor(text=[text], return_tensors="pt", padding=True)
     with torch.inference_mode():
-        features = model.get_text_features(**inputs)
-    return search_by_embedding(features[0].cpu().numpy(), top_k)
+        features = _to_tensor(model.get_text_features(**inputs))
+    return search_by_embedding(features[0].detach().cpu().numpy(), top_k)
