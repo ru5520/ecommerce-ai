@@ -45,13 +45,13 @@
 > [🔗 源码 github.com/ru5520/agent-lab](https://github.com/ru5520/agent-lab) · 与上方电商项目**共用商品库与业务场景**  
 > **技术栈**：OpenAI SDK · LangChain · LangGraph · FAISS · BGE · PEFT · TRL · QLoRA · Gradio
 
-**分阶段实现「检索 → Agent 编排 → 小模型领域化」完整技术栈**，形成可演示、可讲解的 AI 应用工程师能力证明：
+**分阶段实现「检索 → Agent 编排 → 小模型领域化」完整技术栈**（Phase 1–4 已端到端跑通验证）：
 
 #### 智能购物 Agent（Phase 4 · 简历 Demo）
 
-- 基于 **LangChain Tool Calling Agent**，封装搜索、详情、加购、购物车、模拟下单 **5 个电商工具**，支持自然语言全流程购物
-- 编写导购 **System Prompt 与业务规则**（禁止编造商品、下单前信息采集、工具失败友好降级），Gradio 聊天界面 + 多轮对话记忆
-- 工具层对接自研电商商品 CSV / 本地订单状态，与多模态 RAG 项目形成 **「RAG 底层 + Agent 中层」** 联动叙事
+- 基于 **LangGraph ReAct Tool Agent**（LangChain 1.x 兼容层），封装搜索、详情、加购、购物车、模拟下单 **5 个电商工具**，支持自然语言全流程购物
+- 编写导购 **System Prompt 与业务规则**（禁止编造商品、下单前信息采集、工具失败友好降级）；**Gradio 6** 本地 Web Demo + CLI 双入口，多轮对话记忆
+- 工具层对接自研电商商品 CSV（中英文关键词映射），与多模态 RAG 项目形成 **「RAG 底层 + Agent 中层」** 联动
 
 #### Agent 基础与框架实践（Phase 1–3）
 
@@ -112,7 +112,7 @@
 - **强自驱学习**：物联网专业背景，自学 PyTorch / 多模态 / LLM Agent / 微调全栈，独立交付上线级项目
 - **体系化思维**：电商 RAG + Agent + 微调三层联动，能讲清「为什么先手写再框架」
 - **工程意识**：降级策略、单元测试、部署、性能数字可量化
-- **抗压能力**：PyTorch DLL / Gradio 隧道 / HF Spaces 兼容等问题均独立排查解决
+- **工程适配**：LangChain 1.x API 迁移、Gradio 6 兼容、Windows 环境编码与依赖安装问题独立排查解决
 
 ---
 
